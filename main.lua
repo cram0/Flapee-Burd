@@ -10,25 +10,39 @@ VIRTUAL_HEIGHT = 288
 
 bg_x = 0
 bg_y = 0
+
 bg2_x = VIRTUAL_WIDTH
 bg2_y = 0
+
 fg_x = 0
 fg2_x = 0
+
+stan_x = VIRTUAL_WIDTH / 2 - 25
+stan_y = VIRTUAL_HEIGHT / 2 - 24
+stan_dy = 0
+
 LOOPINGPOINT = 512
+GRAVITY = 1
 
 bg = love.graphics.newImage("background.png")
 bg2 = love.graphics.newImage("background.png")
 fg = love.graphics.newImage("foreground.png")
 fg2 = love.graphics.newImage("foreground.png")
-stan = love.graphics.newImage("stan.png")
+stan = love.graphics.newImage("stan3.png")
+
+function reset()
+    stan_y = VIRTUAL_HEIGHT / 2 - 24
+    stan_dy = 0
+end
 
 function love.load()
     love.graphics.setDefaultFilter("nearest","nearest")
     push:setupScreen(VIRTUAL_WIDTH,VIRTUAL_HEIGHT,WINDOW_WIDTH,WINDOW_HEIGHT, {fullscreen = false})
-
 end
 
 function love.update(dt)
+
+    
 
     ----Scrolls background----
     bg_x = bg_x - 1 * 20 * dt
@@ -52,18 +66,37 @@ function love.update(dt)
     end
     --------------------------
 
+    function love.keypressed(key)
+        if key == "escape" then
+            love.event.quit()
+        end
+        if key == "space" then
+            stan_dy = -150
+        end
+    end
 
+    if stan_y + (50 * 0.90) >= VIRTUAL_HEIGHT then
+        reset()
+    end
+
+
+
+
+    stan_dy = stan_dy + GRAVITY 
+    stan_y = stan_y + stan_dy * dt
 end
 
 function love.draw()
 push:apply("start")
 love.graphics.draw(bg,bg_x,bg_y)
 love.graphics.draw(bg2,bg2_x,bg2_y)
-love.graphics.draw(stan, VIRTUAL_WIDTH / 2 , VIRTUAL_HEIGHT / 2 , 0, 0.1,0.1)
+love.graphics.draw(stan, stan_x , stan_y,0,0.9,0.9)
 love.graphics.draw(fg,fg_x,VIRTUAL_HEIGHT-10)
 love.graphics.draw(fg2,fg2_x,VIRTUAL_HEIGHT-10)
-love.graphics.print(tostring(bg_x), 0 , 10)
-love.graphics.print(tostring(bg2_x), 0 , 20)
+love.graphics.print(tostring(stan_y), 0 , 10)
+love.graphics.print(tostring(stan_dy), 0 , 20)
 push:apply("end")
+
+
 end
 
