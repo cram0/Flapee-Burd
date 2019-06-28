@@ -1,7 +1,9 @@
 push = require 'push'
 Class = require 'class'
+require 'pillar'
 
 
+math.randomseed(os.time())
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
@@ -23,17 +25,20 @@ stan_dy = 0
 
 LOOPINGPOINT = 512
 GRAVITY = 1
-
+local pillar = Pillar()
 bg = love.graphics.newImage("background.png")
 bg2 = love.graphics.newImage("background.png")
 fg = love.graphics.newImage("foreground.png")
 fg2 = love.graphics.newImage("foreground.png")
-stan = love.graphics.newImage("stan3.png")
+stan = love.graphics.newImage("stan.png")
+
+
 
 function reset()
     stan_y = VIRTUAL_HEIGHT / 2 - 24
     stan_dy = 0
 end
+
 
 function love.load()
     love.graphics.setDefaultFilter("nearest","nearest")
@@ -41,6 +46,7 @@ function love.load()
 end
 
 function love.update(dt)
+
 
     
 
@@ -79,15 +85,14 @@ function love.update(dt)
         reset()
     end
 
-
-
-
+    pillar:update(dt)
     stan_dy = stan_dy + GRAVITY 
     stan_y = stan_y + stan_dy * dt
 end
 
 function love.draw()
 push:apply("start")
+pillar:render()
 love.graphics.draw(bg,bg_x,bg_y)
 love.graphics.draw(bg2,bg2_x,bg2_y)
 love.graphics.draw(stan, stan_x , stan_y,0,0.9,0.9)
