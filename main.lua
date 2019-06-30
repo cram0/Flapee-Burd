@@ -24,13 +24,13 @@ stan_y = VIRTUAL_HEIGHT / 2 - 24
 stan_dy = 0
 
 LOOPINGPOINT = 512
-GRAVITY = 1
+GRAVITY = 5
 local pillar = Pillar()
-bg = love.graphics.newImage("background.png")
-bg2 = love.graphics.newImage("background.png")
-fg = love.graphics.newImage("foreground.png")
-fg2 = love.graphics.newImage("foreground.png")
-stan = love.graphics.newImage("stan.png")
+bg = love.graphics.newImage("gfx/background.png")
+bg2 = love.graphics.newImage("gfx/background.png")
+fg = love.graphics.newImage("gfx/foreground.png")
+fg2 = love.graphics.newImage("gfx/foreground.png")
+stan = love.graphics.newImage("gfx/stan.png")
 
 
 
@@ -42,7 +42,7 @@ end
 
 function love.load()
     love.graphics.setDefaultFilter("nearest","nearest")
-    push:setupScreen(VIRTUAL_WIDTH,VIRTUAL_HEIGHT,WINDOW_WIDTH,WINDOW_HEIGHT, {fullscreen = false})
+    push:setupScreen(VIRTUAL_WIDTH,VIRTUAL_HEIGHT,WINDOW_WIDTH,WINDOW_HEIGHT, {fullscreen = false, vsync = true})
 end
 
 function love.update(dt)
@@ -83,11 +83,10 @@ function love.update(dt)
 
     if stan_y + (50 * 0.90) >= VIRTUAL_HEIGHT then
         reset()
-    end
+        end
 
-    pillar:update(dt)
     stan_dy = stan_dy + GRAVITY 
-    stan_y = stan_y + stan_dy * dt
+    stan_y = stan_y + stan_dy * dt 
 end
 
 function love.draw()
@@ -100,6 +99,7 @@ love.graphics.draw(fg,fg_x,VIRTUAL_HEIGHT-10)
 love.graphics.draw(fg2,fg2_x,VIRTUAL_HEIGHT-10)
 love.graphics.print(tostring(stan_y), 0 , 10)
 love.graphics.print(tostring(stan_dy), 0 , 20)
+love.graphics.print(tostring(love.timer.getFPS()), 0, 30)
 push:apply("end")
 
 

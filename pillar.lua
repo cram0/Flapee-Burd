@@ -1,6 +1,6 @@
 Pillar = Class{}
 
-local PILLAR_IMAGE = love.graphics.newImage("pillar.png")
+local PILLAR_IMAGE = love.graphics.newImage("gfx/pillar.png")
 local PILLAR_SPEED = -100
 
 function Pillar:init()
