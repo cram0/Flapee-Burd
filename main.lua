@@ -1,6 +1,7 @@
 push = require "push"
 Class = require "class"
 require "pillar"
+require "stan"
 
 math.randomseed(os.time())
 WINDOW_WIDTH = 1280
@@ -18,24 +19,19 @@ bg2_y = 0
 fg_x = 0
 fg2_x = 0
 
-stan_x = VIRTUAL_WIDTH / 2 - 25
-stan_y = VIRTUAL_HEIGHT / 2 - 24
-stan_dy = 0
-
 LOOPINGPOINT = 512
-GRAVITY = 1
 
-local pillar = Pillar()
+local packPillars = {}
+
+
+
+local stan = Stan()
 bg = love.graphics.newImage("gfx/background.png")
 bg2 = love.graphics.newImage("gfx/background.png")
 fg = love.graphics.newImage("gfx/foreground.png")
 fg2 = love.graphics.newImage("gfx/foreground.png")
-stan = love.graphics.newImage("gfx/stan.png")
 
-function reset()
-    stan_y = VIRTUAL_HEIGHT / 2 - 24
-    stan_dy = 0
-end
+
 
 function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest")
@@ -70,28 +66,23 @@ function love.update(dt)
             love.event.quit()
         end
         if key == "space" then
-            stan_dy = -150
+            stan.dy = -150
         end
     end
-
-    if stan_y + (50 * 0.90) >= VIRTUAL_HEIGHT then
-        reset()
-    end
-
-    stan_dy = stan_dy + GRAVITY
-    stan_y = stan_y + stan_dy * dt
+    pillar:update(dt)
+    stan:update(dt)
 end
 
 function love.draw()
     push:apply("start")
-    pillar:render()
     love.graphics.draw(bg, bg_x, bg_y)
     love.graphics.draw(bg2, bg2_x, bg2_y)
-    love.graphics.draw(stan, stan_x, stan_y, 0, 0.9, 0.9)
+    stan:render()
+    pillar:render()
     love.graphics.draw(fg, fg_x, VIRTUAL_HEIGHT - 10)
     love.graphics.draw(fg2, fg2_x, VIRTUAL_HEIGHT - 10)
-    love.graphics.print(tostring(stan_y), 0, 10)
-    love.graphics.print(tostring(stan_dy), 0, 20)
+    love.graphics.print(tostring(stan.y), 0, 10)
+    love.graphics.print(tostring(stan.dy), 0, 20)
     love.graphics.print(tostring(love.timer.getFPS()), 0, 30)
     push:apply("end")
 end
