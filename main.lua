@@ -23,7 +23,8 @@ stan_y = VIRTUAL_HEIGHT / 2 - 24
 stan_dy = 0
 
 LOOPINGPOINT = 512
-GRAVITY = 5
+GRAVITY = 1
+
 local pillar = Pillar()
 bg = love.graphics.newImage("gfx/background.png")
 bg2 = love.graphics.newImage("gfx/background.png")
