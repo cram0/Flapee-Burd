@@ -1,6 +1,6 @@
 # Flapee Burd
 
-Scuffed version of the original Flappy Bird phone game made in Lua with LÖVE2D
+Modified version of the original Flappy Bird phone game made in Lua with LÖVE2D
 
 ## Getting Started
 
