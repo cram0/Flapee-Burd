@@ -20,7 +20,7 @@ function Stan:update(dt)
     self.dy = self.dy + GRAVITY
     self.y = self.y + self.dy * dt
     if self.y + (50 * 0.90) >= VIRTUAL_HEIGHT then
-        Stan:reset()
+        self:reset() --self:"nom methode"() pour appeler methode de la meme classe (Ligne 14)
     end
 end
 

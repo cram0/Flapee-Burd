@@ -2,6 +2,7 @@ push = require "push"
 Class = require "class"
 require "pillar"
 require "stan"
+require "strict"
 
 math.randomseed(os.time())
 WINDOW_WIDTH = 1280
@@ -21,7 +22,14 @@ fg2_x = 0
 
 LOOPINGPOINT = 512
 
-local packPillars = {}
+local pillar1 = Pillar(VIRTUAL_WIDTH + (VIRTUAL_WIDTH / 4) )
+local pillar2 = Pillar(VIRTUAL_WIDTH + (VIRTUAL_WIDTH / 4) * 2)
+local pillar3 = Pillar(VIRTUAL_WIDTH + (VIRTUAL_WIDTH / 4) * 3)
+local pillar4 = Pillar(VIRTUAL_WIDTH + (VIRTUAL_WIDTH / 4) * 4)
+
+local packPillars = {pillar1,pillar2,pillar3,pillar4}
+
+
 
 
 
@@ -30,7 +38,6 @@ bg = love.graphics.newImage("gfx/background.png")
 bg2 = love.graphics.newImage("gfx/background.png")
 fg = love.graphics.newImage("gfx/foreground.png")
 fg2 = love.graphics.newImage("gfx/foreground.png")
-
 
 
 function love.load()
@@ -69,7 +76,21 @@ function love.update(dt)
             stan.dy = -150
         end
     end
-    pillar:update(dt)
+
+    function movePillar(_pillar,dt)
+        _pillar.x = _pillar.x - 60 * dt
+    end
+
+    for k, v in pairs(packPillars) do
+        if v.x <= -v.width then
+            v.x = VIRTUAL_WIDTH
+        else
+            movePillar(v,dt)
+        end
+    end
+
+    
+
     stan:update(dt)
 end
 
@@ -78,11 +99,19 @@ function love.draw()
     love.graphics.draw(bg, bg_x, bg_y)
     love.graphics.draw(bg2, bg2_x, bg2_y)
     stan:render()
-    pillar:render()
+    pillar1:render()
+    pillar2:render()
+    pillar3:render()
+    pillar4:render()
     love.graphics.draw(fg, fg_x, VIRTUAL_HEIGHT - 10)
     love.graphics.draw(fg2, fg2_x, VIRTUAL_HEIGHT - 10)
-    love.graphics.print(tostring(stan.y), 0, 10)
-    love.graphics.print(tostring(stan.dy), 0, 20)
+    love.graphics.print("y : "..tostring(stan.y), 0, 10)
+    love.graphics.print("dy : "..tostring(stan.dy), 0, 20)
     love.graphics.print(tostring(love.timer.getFPS()), 0, 30)
+    love.graphics.print("Pilier 1 : "..tostring(pillar1.x), VIRTUAL_WIDTH - 100, 10)
+    love.graphics.print("Pilier 2 : "..tostring(pillar2.x), VIRTUAL_WIDTH - 100, 20)
+    love.graphics.print("Pilier 3 : "..tostring(pillar3.x), VIRTUAL_WIDTH - 100, 30)
+    love.graphics.print("Pilier 4 : "..tostring(pillar4.x), VIRTUAL_WIDTH - 100, 40)
+
     push:apply("end")
 end
