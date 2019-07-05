@@ -1,4 +1,4 @@
 function love.conf(t)
-    t.window.vsync = false
+    t.window.vsync = true
     t.window.title = "Flappy Stan"
 end

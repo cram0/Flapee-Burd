@@ -22,12 +22,9 @@ fg2_x = 0
 
 LOOPINGPOINT = 512
 
-local pillar1 = Pillar(VIRTUAL_WIDTH + (VIRTUAL_WIDTH / 4) )
-local pillar2 = Pillar(VIRTUAL_WIDTH + (VIRTUAL_WIDTH / 4) * 2)
-local pillar3 = Pillar(VIRTUAL_WIDTH + (VIRTUAL_WIDTH / 4) * 3)
-local pillar4 = Pillar(VIRTUAL_WIDTH + (VIRTUAL_WIDTH / 4) * 4)
+local pillar1 = Pillar(VIRTUAL_WIDTH + 1)
 
-local packPillars = {pillar1,pillar2,pillar3,pillar4}
+local packPillars = {}
 
 
 
@@ -100,18 +97,12 @@ function love.draw()
     love.graphics.draw(bg2, bg2_x, bg2_y)
     stan:render()
     pillar1:render()
-    pillar2:render()
-    pillar3:render()
-    pillar4:render()
     love.graphics.draw(fg, fg_x, VIRTUAL_HEIGHT - 10)
     love.graphics.draw(fg2, fg2_x, VIRTUAL_HEIGHT - 10)
     love.graphics.print("y : "..tostring(stan.y), 0, 10)
     love.graphics.print("dy : "..tostring(stan.dy), 0, 20)
     love.graphics.print(tostring(love.timer.getFPS()), 0, 30)
     love.graphics.print("Pilier 1 : "..tostring(pillar1.x), VIRTUAL_WIDTH - 100, 10)
-    love.graphics.print("Pilier 2 : "..tostring(pillar2.x), VIRTUAL_WIDTH - 100, 20)
-    love.graphics.print("Pilier 3 : "..tostring(pillar3.x), VIRTUAL_WIDTH - 100, 30)
-    love.graphics.print("Pilier 4 : "..tostring(pillar4.x), VIRTUAL_WIDTH - 100, 40)
 
     push:apply("end")
 end
