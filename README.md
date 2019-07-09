@@ -11,6 +11,7 @@ Simply use Space to jump
 
 * [LÖVE2D](https://love2d.org/) or [It's source code](https://bitbucket.org/rude/love/src/default/) - The game sdk used, please check them out !
 * [Push](https://github.com/Ulydev/push) For a more retro-y look
+* [Strict](https://github.com/deepmind/strict) Pretty much self-explanatory
 
 ## Authors
 
